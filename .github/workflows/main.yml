@@ -1,0 +1,24 @@
+name: DicordBot
+
+env:
+  IMAGE_URL: https://murciadev.github.io/captain-haddock-discord-bot/imgs/what-a-week.jpg
+
+on:
+  schedule:
+    # cron schedules run on UTC time
+    - cron: "00 9 * * wed" # this will run at 11 on wednesday
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: CaptainHaddockBot
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_EMBEDS: '[{"image": {"url": "${{ env.IMAGE_URL }}"} }]'
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "What a week..."
